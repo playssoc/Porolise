@@ -12,15 +12,11 @@
         const payerId = urlParams.get('PayerID');
 
         if (payerId) {
-            // If PayerID is present in the URL, show the content
-            document.write(`
-                <h1>Thank You for Your Purchase!</h1>
-                <p>Here’s your 15-minute MP3 track:</p>
-                <a href="downloads/track-15min.mp3" download>Download 15-Minute MP3</a>
-            `);
+            // If PayerID is found, redirect the user to a clean page (to avoid 405 errors)
+            window.location.replace("https://porolise.com/thank-you");  // Redirect to a clean page with access
         } else {
-            // If no PayerID, redirect to the Thank You page (or display an error)
-            window.location.replace("https://porolise.com/thank-you");  // Replace with your clean thank-you page URL
+            // If PayerID is not found, redirect to an error page
+            window.location.replace("https://porolise.com/error");  // Replace with your error page URL
         }
     </script>
 </body>
