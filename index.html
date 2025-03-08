@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Shop</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Welcome to My Music Shop</h1>
+    <p>Immerse yourself in music tailored to your needs — whether it's a quick session or an all-day vibe. Pick the perfect option below!</p>
+
+    <h2>Choose Your Experience</h2>
+
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <label for="product">Select Your Track:</label>
+        <select name="item_name" id="product" onchange="updatePrice()">
+            <option value="MP3 - 15 Minutes" data-price="3.00">MP3 - 15 Minutes ($3)</option>
+            <option value="MP3 - 30 Minutes" data-price="5.00">MP3 - 30 Minutes ($5)</option>
+            <option value="Ultimate Bundle (MP3 + WAV)" data-price="9.99">Ultimate Bundle: 1 Hour & 8 Hours (MP3 + WAV) — Best Value! ($9.99)</option>
+       </select>
+
+        <p id="priceDisplay">Price: $3.00</p>
+
+        <!-- PayPal hidden inputs -->
+        <input type="hidden" name="cmd" value="_xclick">
+        <input type="hidden" name="business" value="your-paypal-email@example.com">
+        <input type="hidden" id="itemName" name="item_name" value="MP3 - 15 Minutes">
+        <input type="hidden" id="amount" name="amount" value="3.00">
+        <input type="hidden" name="currency_code" value="USD">
+
+        <input type="submit" value="Buy Now">
+    </form>
+
+    <script>
+        function updatePrice() {
+            const productSelect = document.getElementById("product");
+            const selectedOption = productSelect.options[productSelect.selectedIndex];
+            const price = selectedOption.getAttribute("data-price");
+
+            document.getElementById("priceDisplay").textContent = "Price: $" + price;
+            document.getElementById("itemName").value = selectedOption.value; document.getElementById("amount").value = price;
+        }
+    </script>
+
+    <h3>Why Choose the Ultimate Bundle?</h3>
+    <p>For just <strong>$9.99</strong>, unlock the full experience:  
+        - A 1-hour and 8-hour version of the track.  
+        - Both high-quality MP3 and studio-grade WAV files.  
+        - Perfect for focus, relaxation, sleep, or an all-day soundtrack.  
+    </p>
+    <p><em>Get the best value and all the options — without limitations!</em></p>
+</body>
+</html>
