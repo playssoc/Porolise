@@ -7,22 +7,21 @@
 </head>
 <body>
     <script>
-        // Check the referrer to see if the user came from PayPal
-        const referrer = document.referrer;
+        // Check if the URL has a PayerID
+        const urlParams = new URLSearchParams(window.location.search);
+        const payerId = urlParams.get('PayerID');
 
-        if (referrer.includes("paypal.com")) {
-            // Show content if the referrer is PayPal
+        if (payerId) {
+            // If PayerID is present in the URL, show the content
             document.write(`
                 <h1>Thank You for Your Purchase!</h1>
                 <p>Here’s your 15-minute MP3 track:</p>
                 <a href="downloads/track-15min.mp3" download>Download 15-Minute MP3</a>
             `);
         } else {
-            // Show an error message or redirect if the referrer isn't PayPal
-            document.write(`
-                <h1>Access Denied</h1>
-                <p>This page is only accessible after a successful purchase. Please buy the track to get access.</p>
-            `);
+            // If no PayerID, redirect to the Thank You page (or display an error)
+            window.location.replace("https://porolise.com/thank-you");  // Replace with your clean thank-you page URL
         }
     </script>
-</body> </html>
+</body>
+</html>
