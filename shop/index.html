@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Music Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Basic styling for navigation */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        nav {
+            background: #333;
+            padding: 1em 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background: #555;
+            border-radius: 5px;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        select, input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        p {
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+
+        .highlight {
+            color: #d9534f;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="https://porolise.com">Home</a>
+    <a href="https://porolise.com/shop">Shop</a>
+    <a href="https://youtube.com/@porolise">YouTube</a>
+</nav>
+
+<h1>Welcome to My Music Shop</h1>
+<p>Immerse yourself in music tailored to your needs — whether it’s a quick session or an all-day vibe. Choose a package below, and get a <span class="highlight">permanent license</span> to all current and future audio tracks!</p>
+
+<h2>Choose Your Experience</h2>
+
+<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" id="paypalForm">
+    <label for="product">Select Your Track:</label>
+    <select name="item_name" id="product" onchange="updatePrice()">
+        <option value="MP3 - 15 Minutes" data-price="3.00" data-return="https://drive.google.com/drive/folders/1dllfFk4pQP5bRFXhQgeZAS6gS8E8Usib">
+            MP3 - 15 Minutes ($3) — Quick Session, Lifetime License
+        </option>
+        <option value="MP3 - 30 Minutes" data-price="5.00" data-return="https://drive.google.com/drive/folders/1zoXe2bvik7qPlHYhupXAypQ531gb9-VX">
+            MP3 - 30 Minutes ($5) — Deeper Focus, Lifetime License
+        </option>
+        <option value="Ultimate Bundle (MP3 + WAV)" data-price="9.99" data-return="https://drive.google.com/drive/folders/1wN5YJHvnuBgF_Fbb_rpAIdmUuy5rs7xB">
+            Ultimate Bundle ($9.99) — All Tracks + Future Releases (Best Value!)
+        </option>
+    </select>
+
+    <p id="priceDisplay">Price: $3.00</p>
+
+    <!-- PayPal hidden inputs -->
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="sb-rpxqu38414213@business.example.com">
+    <input type="hidden" id="itemName" name="item_name" value="MP3 - 15 Minutes">
+    <input type="hidden" id="amount" name="amount" value="3.00">
+    <input type="hidden" id="returnURL" name="return" value="https://porolise.com/file">
+    <input type="hidden" name="rm" value="2">
+
+    <input type="submit" value="Buy Now">
+</form>
+
+<script>
+    function updatePrice() {
+        const productSelect = document.getElementById("product");
+        const selectedOption = productSelect.options[productSelect.selectedIndex];
+
+        const price = selectedOption.getAttribute("data-price");
+        const returnURL = selectedOption.getAttribute("data-return");
+
+        document.getElementById("priceDisplay").textContent = "Price: $" + price;
+        document.getElementById("itemName").value = selectedOption.value; document.getElementById("amount").value = price;
+        document.getElementById("returnURL").value = returnURL;
+    }
+
+    window.onload = updatePrice;
+</script>
+
+<h3>Why Choose the Ultimate Bundle?</h3>
+<p>For just <strong>$9.99</strong>, unlock everything:  
+    - A 1-hour and 8-hour version of the track.  
+    - Both high-quality MP3 and studio-grade WAV files.  
+    - <span class="highlight">Permanent license</span> to all current and future audio files.  
+    - Perfect for focus, relaxation, sleep, or an all-day soundtrack.  
+</p>
+<p><em>Get the best value and unlimited access — now and forever!</em></p>
+
+</body>
+</html>
