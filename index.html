@@ -8,26 +8,27 @@
 </head>
 <body>
     <h1>Welcome to My Music Shop</h1>
-    <p>Immerse yourself in music tailored to your needs — whether it's a quick session or an all-day vibe. Pick the perfect option below!</p>
+    <p>Immerse yourself in music tailored to your needs — whether it’s a quick session or an all-day vibe. Pick the perfect option below!</p>
 
     <h2>Choose Your Experience</h2>
 
-    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypalForm">
         <label for="product">Select Your Track:</label>
         <select name="item_name" id="product" onchange="updatePrice()">
-            <option value="MP3 - 15 Minutes" data-price="3.00">MP3 - 15 Minutes ($3)</option>
-            <option value="MP3 - 30 Minutes" data-price="5.00">MP3 - 30 Minutes ($5)</option>
-            <option value="Ultimate Bundle (MP3 + WAV)" data-price="9.99">Ultimate Bundle: 1 Hour & 8 Hours (MP3 + WAV) — Best Value! ($9.99)</option>
-       </select>
+            <option value="MP3 - 15 Minutes" data-price="3.00" data-return="https://porolise.com/t3p">MP3 - 15 Minutes ($3)</option>
+            <option value="MP3 - 30 Minutes" data-price="5.00" data-return="https://porolise.com/t5p">MP3 - 30 Minutes ($5)</option>
+            <option value="Ultimate Bundle (MP3 + WAV)" data-price="9.99" data-return="https://porolise.com/t10p">Ultimate Bundle: 1 Hour & 8 Hours (MP3 + WAV) — Best Value! ($9.99)</option>
+        </select>
 
         <p id="priceDisplay">Price: $3.00</p>
 
         <!-- PayPal hidden inputs -->
         <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="andriaserikkiher@gmail.com">
+        <input type="hidden" name="business" value="your-paypal-email@example.com">
         <input type="hidden" id="itemName" name="item_name" value="MP3 - 15 Minutes">
         <input type="hidden" id="amount" name="amount" value="3.00">
-        <input type="hidden" name="currency_code" value="USD">
+        <input type="hidden" id="returnURL" name="return" value="https://porolise.com/t3p">
+        <input type="hidden" name="rm" value="2">
 
         <input type="submit" value="Buy Now">
     </form>
@@ -36,10 +37,14 @@
         function updatePrice() {
             const productSelect = document.getElementById("product");
             const selectedOption = productSelect.options[productSelect.selectedIndex];
+
             const price = selectedOption.getAttribute("data-price");
+            const returnURL = selectedOption.getAttribute("data-return");
 
             document.getElementById("priceDisplay").textContent = "Price: $" + price;
-            document.getElementById("itemName").value = selectedOption.value; document.getElementById("amount").value = price;
+            document.getElementById("itemName").value = selectedOption.value;
+            document.getElementById("amount").value = price;
+            document.getElementById("returnURL").value = returnURL;
         }
     </script>
 
