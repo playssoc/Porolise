@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your 15-Minute MP3 Download</title>
+</head>
+<body>
+    <script>
+        // Check the referrer to see if the user came from PayPal
+        const referrer = document.referrer;
+
+        if (referrer.includes("paypal.com")) {
+            // Show content if the referrer is PayPal
+            document.write(`
+                <h1>Thank You for Your Purchase!</h1>
+                <p>Here’s your 15-minute MP3 track:</p>
+                <a href="downloads/track-15min.mp3" download>Download 15-Minute MP3</a>
+            `);
+        } else {
+            // Show an error message or redirect if the referrer isn't PayPal
+            document.write(`
+                <h1>Access Denied</h1>
+                <p>This page is only accessible after a successful purchase. Please buy the track to get access.</p>
+            `);
+        }
+    </script>
+</body> </html>
