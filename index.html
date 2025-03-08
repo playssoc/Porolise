@@ -46,6 +46,9 @@
             document.getElementById("amount").value = price;
             document.getElementById("returnURL").value = returnURL;
         }
+
+        // Call updatePrice on load to set initial values
+        window.onload = updatePrice;
     </script>
 
     <h3>Why Choose the Ultimate Bundle?</h3>
