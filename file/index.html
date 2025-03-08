@@ -7,17 +7,20 @@
 </head>
 <body>
     <script>
-        // Check if the URL has a PayerID
-        const urlParams = new URLSearchParams(window.location.search);
-        const payerId = urlParams.get('PayerID');
+        // Wait for the page to load fully
+        window.onload = function() {
+            // Check if the URL has a PayerID
+            const urlParams = new URLSearchParams(window.location.search);
+            const payerId = urlParams.get('PayerID');
 
-        if (payerId) {
-            // If PayerID is found, redirect the user to a clean page (to avoid 405 errors)
-            window.location.replace("https://porolise.com/thank-you");  // Redirect to a clean page with access
-        } else {
-            // If PayerID is not found, redirect to an error page
-            window.location.replace("https://porolise.com/error");  // Replace with your error page URL
-        }
+            if (payerId) {
+                // If PayerID is found, redirect the user to a clean page (to avoid 405 errors)
+                window.location.replace("https://porolise.com/thank-you");  // Redirect to a clean page with access
+            } else {
+                // If PayerID is not found, redirect to an error page
+                window.location.replace("https://porolise.com/error");  // Replace with your error page URL
+            }
+        };
     </script>
 </body>
 </html>
