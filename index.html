@@ -15,7 +15,7 @@
     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" id="paypalForm">
         <label for="product">Select Your Track:</label>
         <select name="item_name" id="product" onchange="updatePrice()">
-            <option value="MP3 - 15 Minutes" data-price="3.00" data-return="https://porolise.com/file">MP3 - 15 Minutes ($3)</option>
+            <option value="MP3 - 15 Minutes" data-price="0.00" data-return="https://porolise.com/file">MP3 - 15 Minutes ($3)</option>
             <option value="MP3 - 30 Minutes" data-price="5.00" data-return="https://porolise.com/files">MP3 - 30 Minutes ($5)</option>
             <option value="Ultimate Bundle (MP3 + WAV)" data-price="9.99" data-return="https://porolise.com/premium">Ultimate Bundle: 1 Hour & 8 Hours (MP3 + WAV) — Best Value! ($9.99)</option>
         </select>
@@ -24,7 +24,7 @@
 
         <!-- PayPal hidden inputs -->
         <input type="hidden" name="cmd" value="_xclick">
-        <input type="hidden" name="business" value="your-paypal-email@example.com">
+        <input type="hidden" name="business" value="andriaserikkiher@gmail.com">
         <input type="hidden" id="itemName" name="item_name" value="MP3 - 15 Minutes">
         <input type="hidden" id="amount" name="amount" value="3.00">
         <input type="hidden" id="returnURL" name="return" value="https://porolise.com/t3p">
