@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Music Shop</title>
+    <title>Music Shop</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Basic styling for navigation */
+        /* Basic styling */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -42,7 +42,7 @@
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
-            background: #fff;
+         background: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
@@ -55,14 +55,62 @@
             border-radius: 5px;
         }
 
-        p {
-            line-height: 1.6;
-            padding: 0 20px;
-        }
-
         .highlight {
             color: #d9534f;
             font-weight: bold;
+        }
+
+        /* Popup styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+        }
+
+        .popup h2 {
+            color: #d9534f;
+        }
+
+        .popup button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none; border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cancel-btn {
+            background: #ccc;
+        }
+
+        .continue-btn {
+            background: #d9534f;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .continue-btn.active {
+            background: #5cb85c;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
     </style>
 </head>
@@ -79,7 +127,7 @@
 
 <h2>Choose Your Experience</h2>
 
-<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" id="paypalForm">
+<form id="paypalForm" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
     <label for="product">Select Your Track:</label>
     <select name="item_name" id="product" onchange="updatePrice()">
         <option value="MP3 - 15 Minutes" data-price="3.00" data-return="https://drive.google.com/drive/folders/1dllfFk4pQP5bRFXhQgeZAS6gS8E8Usib">
@@ -95,41 +143,72 @@
 
     <p id="priceDisplay">Price: $3.00</p>
 
-    <!-- PayPal hidden inputs -->
     <input type="hidden" name="cmd" value="_xclick">
     <input type="hidden" name="business" value="sb-rpxqu38414213@business.example.com">
-    <input type="hidden" id="itemName" name="item_name" value="MP3 - 15 Minutes">
-    <input type="hidden" id="amount" name="amount" value="3.00">
-    <input type="hidden" id="returnURL" name="return" value="https://porolise.com/file">
+    <input type="hidden" id="itemName" name="item_name">
+    <input type="hidden" id="amount" name="amount">
+    <input type="hidden" id="returnURL" name="return">
     <input type="hidden" name="rm" value="2">
 
-    <input type="submit" value="Buy Now">
+    <input type="button" value="Buy Now" onclick="showPopup()">
 </form>
+
+<!-- Popup -->
+<div class="overlay" id="overlay"></div>
+<div class="popup" id="popup">
+    <h2>Important!</h2>
+    <p class="highlight">Make sure to click "Return to Merchant" after payment.<br>If you don't, you won't get your rewards!</p>
+    <label>
+        <input type="checkbox" id="confirmCheckbox" onchange="toggleContinue()"> I understand that if I do not click return to merchant, I will not get my rewards.
+    </label>
+    <br> <button class="cancel-btn" onclick="closePopup()">Cancel</button>
+    <button class="continue-btn" id="continueButton" onclick="submitForm()" disabled> Please tick the box to continue</button>
+</div>
 
 <script>
     function updatePrice() {
         const productSelect = document.getElementById("product");
         const selectedOption = productSelect.options[productSelect.selectedIndex];
-
         const price = selectedOption.getAttribute("data-price");
         const returnURL = selectedOption.getAttribute("data-return");
 
         document.getElementById("priceDisplay").textContent = "Price: $" + price;
-        document.getElementById("itemName").value = selectedOption.value; document.getElementById("amount").value = price;
+        document.getElementById("itemName").value = selectedOption.value;
+        document.getElementById("amount").value = price;
         document.getElementById("returnURL").value = returnURL;
+    }
+
+    function showPopup() {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("overlay").style.display = "none";
+        document.getElementById("popup").style.display = "none";
+    }
+
+    function toggleContinue() {
+        const checkbox = document.getElementById("confirmCheckbox");
+        const continueButton = document.getElementById("continueButton");
+
+        if (checkbox.checked) {
+            continueButton.disabled = false;
+            continueButton.classList.add("active");
+            continueButton.innerText = "Continue to Payment";
+        } else {
+            continueButton.disabled = true;
+            continueButton.classList.remove("active");
+            continueButton.innerText = "Please tick the box to continue";
+        }
+    }
+
+    function submitForm() {
+        document.getElementById("paypalForm").submit();
     }
 
     window.onload = updatePrice;
 </script>
-
-<h3>Why Choose the Ultimate Bundle?</h3>
-<p>For just <strong>$9.99</strong>, unlock everything:  
-    - A 1-hour and 8-hour version of the track.  
-    - Both high-quality MP3 and studio-grade WAV files.  
-    - <span class="highlight">Permanent license</span> to all current and future audio files.  
-    - Perfect for focus, relaxation, sleep, or an all-day soundtrack.  
-</p>
-<p><em>Get the best value and unlimited access — now and forever!</em></p>
 
 </body>
 </html>
